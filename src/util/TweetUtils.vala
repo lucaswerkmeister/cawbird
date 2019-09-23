@@ -53,14 +53,15 @@ namespace TweetUtils {
     call.invoke_async.begin (null, (obj, res) => {
       try {
         call.invoke_async.end (res);
+
+        if (status)
+          tweet.set_flag (Cb.TweetState.FAVORITED);
+        else
+          tweet.unset_flag (Cb.TweetState.FAVORITED);
       } catch (GLib.Error e) {
         Utils.show_error_object (call.get_payload (), e.message,
                                  GLib.Log.LINE, GLib.Log.FILE);
       }
-      if (status)
-        tweet.set_flag (Cb.TweetState.FAVORITED);
-      else
-        tweet.unset_flag (Cb.TweetState.FAVORITED);
 
       set_favorite_status.callback ();
     });

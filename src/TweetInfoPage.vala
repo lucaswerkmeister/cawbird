@@ -625,7 +625,7 @@ class TweetInfoPage : IPage, ScrollWidget, Cb.MessageReceiver {
     TweetUtils.set_favorite_status.begin (account, tweet, favoriting, () => {
       favorite_button.sensitive = true;
       values_set = false;
-      favorite_button.active = favoriting;
+      favorite_button.active = tweet.is_flag_set (Cb.TweetState.FAVORITED);
       values_set = true;
     });
   }
