@@ -54,11 +54,16 @@ namespace TweetUtils {
       try {
         call.invoke_async.end (res);
 
-        if (status)
+        if (status) {
+          debug ("LUCAS set FAVORITED flag");
           tweet.set_flag (Cb.TweetState.FAVORITED);
-        else
+        }
+        else {
+          debug ("LUCAS unset FAVORITED flag");
           tweet.unset_flag (Cb.TweetState.FAVORITED);
+        }
       } catch (GLib.Error e) {
+        debug ("LUCAS favorite error");
         Utils.show_error_object (call.get_payload (), e.message,
                                  GLib.Log.LINE, GLib.Log.FILE);
       }
