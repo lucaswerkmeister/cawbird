@@ -272,7 +272,9 @@ class TweetInfoPage : IPage, ScrollWidget, Cb.MessageReceiver {
 
     this.update_rt_fav_labels ();
 
+    debug ("LUCAS toggled begin set favorite status");
     TweetUtils.set_favorite_status.begin (account, tweet, favorite_button.active, () => {
+        debug ("LUCAS toggled end set favorite status, set sensitive");
       favorite_button.sensitive = true;
     });
   }
@@ -515,6 +517,7 @@ class TweetInfoPage : IPage, ScrollWidget, Cb.MessageReceiver {
     update_rt_fav_labels ();
     time_label.label = time_format;
     retweet_button.active  = tweet.is_flag_set (Cb.TweetState.RETWEETED);
+    debug ("LUCAS set_tweet_data setting active %s", tweet.is_flag_set (Cb.TweetState.FAVORITED) ? "true" : "false");
     favorite_button.active = tweet.is_flag_set (Cb.TweetState.FAVORITED);
     avatar_image.verified  = tweet.is_flag_set (Cb.TweetState.VERIFIED);
 
@@ -703,6 +706,7 @@ class TweetInfoPage : IPage, ScrollWidget, Cb.MessageReceiver {
       int64 id = root.get_object ().get_int_member ("id");
       if (id == this.tweet_id) {
         this.values_set = false;
+        debug ("LUCAS set active in stream_message_received");
         this.favorite_button.active = true;
         this.tweet.favorite_count ++;
         this.update_rt_fav_labels ();
@@ -714,6 +718,7 @@ class TweetInfoPage : IPage, ScrollWidget, Cb.MessageReceiver {
       int64 source_id = root.get_object ().get_object_member ("source").get_int_member ("id");
       if (source_id == account.id && id == this.tweet_id) {
         this.values_set = false;
+        debug ("LUCAS unset active in stream_message_received");
         this.favorite_button.active = false;
         this.tweet.favorite_count --;
         this.update_rt_fav_labels ();
