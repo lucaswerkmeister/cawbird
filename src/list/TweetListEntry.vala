@@ -234,7 +234,8 @@ public class TweetListEntry : Cb.TwitterItem, Gtk.ListBoxRow {
     delete_tweet.connect (delete_tweet_activated);
     quote_tweet.connect (quote_activated);
     favorite_tweet.connect (() => {
-      favorite_button.active = !favorite_button.active;
+      debug ("LUCAS tweet list entry set fav button active to %s, old code would have set %s", tweet.is_flag_set (Cb.TweetState.FAVORITED) ? "true" : "false", !favorite_button.active ? "true" : "false");
+      favorite_button.active = tweet.is_flag_set (Cb.TweetState.FAVORITED);
     });
     retweet_tweet.connect (() => {
       retweet_button.tap ();
