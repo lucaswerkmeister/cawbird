@@ -389,8 +389,11 @@ public class TweetListEntry : Cb.TwitterItem, Gtk.ListBoxRow {
       return;
 
     favorite_button.sensitive = false;
+    debug ("LUCAS favorite_button_toggled_cb");
     TweetUtils.set_favorite_status.begin (account, tweet, favorite_button.active, () => {
       favorite_button.sensitive = true;
+      debug ("LUCAS favorite_button_toggled_cb: setting flag to %s", tweet.is_flag_set (Cb.TweetState.FAVORITED) ? "true" : "false");
+      favorite_button.active = tweet.is_flag_set (Cb.TweetState.FAVORITED);
     });
     if (shows_actions)
       toggle_mode ();

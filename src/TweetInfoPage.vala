@@ -625,6 +625,7 @@ class TweetInfoPage : IPage, ScrollWidget, Cb.MessageReceiver {
 
     this.update_rt_fav_labels ();
 
+    debug ("LUCAS favorite_activated");
     TweetUtils.set_favorite_status.begin (account, tweet, favoriting, () => {
       favorite_button.sensitive = true;
       values_set = false;
